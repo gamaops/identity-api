@@ -1,0 +1,64 @@
+{
+  "name": "@gamaops/identity-api",
+  "version": "0.0.0",
+  "description": "Identity API",
+  "main": "index.js",
+  "scripts": {
+    "lint": "tslint --fix -c 'tslint.json' -e './node_modules/**/*' './**/*.ts'",
+    "prebuild": "rimraf build",
+    "serve": "node build/index.js | ./node_modules/.bin/bunyan",
+    "build": "tsc",
+    "start": "tsc -w",
+    "coverage": "nyc npm run test",
+    "test": "mocha 'specs/unit/**/*.spec.ts' -b -r 'ts-node/register' -r 'module-alias/register'",
+    "test:tdd": "npm run test:unit -- -w --extension ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gamaops/identity-api.git"
+  },
+  "keywords": [
+    "identity",
+    "api"
+  ],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/gamaops/identity-api/issues"
+  },
+  "homepage": "https://github.com/gamaops/identity-api#readme",
+  "devDependencies": {
+    "@types/bunyan": "^1.8.6",
+    "@types/chai": "^4.1.7",
+    "@types/mocha": "^5.2.7",
+    "@types/mock-require": "^2.0.0",
+    "@types/node": "^12.0.8",
+    "@types/sinon": "^7.0.13",
+    "chai": "^4.2.0",
+    "mocha": "^6.1.4",
+    "mock-require": "^3.0.3",
+    "module-alias": "^2.2.0",
+    "nyc": "^14.1.1",
+    "rimraf": "^2.7.1",
+    "sinon": "^7.3.2",
+    "ts-node": "^8.3.0",
+    "tslint": "^5.17.0",
+    "typescript": "^3.5.2"
+  },
+  "dependencies": {
+    "@elastic/elasticsearch": "^7.3.0",
+    "@gamaops/backend-framework": "git+ssh://git@github.com/gamaops/backend-framework.git",
+    "@gamaops/definitions": "git+ssh://git@github.com/gamaops/definitions.git",
+    "@grpc/proto-loader": "^0.5.1",
+    "ajv": "^6.10.2",
+    "bodybuilder": "^2.2.17",
+    "bunyan": "^1.8.12",
+    "date-fns": "^2.0.0-beta.5",
+    "dotenv-defaults": "^1.0.2",
+    "grpc": "^1.23.1",
+    "hfxbus": "^2.2.0-0",
+    "libphonenumber-js": "^1.7.22",
+    "prom-client": "^11.5.3",
+    "protobufjs": "^6.8.8"
+  }
+}
