@@ -10,6 +10,7 @@
     "build": "tsc",
     "start": "tsc -w",
     "pm2:up": "pm2 start build/index.js --name identity-api",
+    "pm2:down": "pm2 del identity-api",
     "coverage": "nyc npm run test",
     "test": "mocha 'specs/unit/**/*.spec.ts' -b -r 'ts-node/register' -r 'module-alias/register'",
     "test:tdd": "npm run test:unit -- -w --extension ts"
