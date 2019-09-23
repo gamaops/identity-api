@@ -49,8 +49,8 @@
   },
   "dependencies": {
     "@elastic/elasticsearch": "^7.3.0",
-    "@gamaops/backend-framework": "git+ssh://git@github.com/gamaops/backend-framework.git",
-    "@gamaops/definitions": "git+ssh://git@github.com/gamaops/definitions.git",
+    "@gamaops/backend-framework": "git+https://git@github.com/gamaops/backend-framework.git",
+    "@gamaops/definitions": "git+https://git@github.com/gamaops/definitions.git",
     "@grpc/proto-loader": "^0.5.1",
     "ajv": "^6.10.2",
     "bodybuilder": "^2.2.17",
