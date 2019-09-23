@@ -27,12 +27,12 @@ export const existsSignUp = async (elasticsearch: Client, signUpId: string): Pro
 	const response = await elasticsearch.exists({
 		index: 'data-identity-sign-up',
 		id: signUpId,
-		_source: false
+		_source: false,
 	} as any);
 
 	return response.body;
 
-}
+};
 
 export const tryGetSignUpLead = async (elasticsearch: Client, signUpLead: ISignUpLead): Promise<ISignUpLead | null> => {
 

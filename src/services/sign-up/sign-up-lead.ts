@@ -1,10 +1,10 @@
 import {
 	generateTimeId,
 	OPERATION_FIELDS,
+	parseObjectToProtobuf,
+	parseProtobufToObject,
 	removeEmptyKeys,
 	removeKeysIfPresent,
-	parseObjectToProtobuf,
-	parseProtobufToObject
 } from '@gamaops/backend-framework';
 import {
 	ISignUpLead,
@@ -12,18 +12,19 @@ import {
 	ISignUpResponse,
 	ValidationChannel,
 } from '@gamaops/definitions/identity/types/v1';
-import {
-	DISTRIBUTED_ROUTING
-} from 'hfxbus';
 import { ValidateFunction } from 'ajv';
 import Logger from 'bunyan';
 import {
 	ServerUnaryCall,
 } from 'grpc';
 import {
+	DISTRIBUTED_ROUTING,
+} from 'hfxbus';
+import {
 	Counter,
 } from 'prom-client';
 import { Type } from 'protobufjs';
+import { ApiRuntime } from '../../interfaces';
 import {
 	validateMobilePhone,
 	validateStoredSignUp,
@@ -32,7 +33,6 @@ import {
 	indexSignUp,
 	tryGetSignUpLead,
 } from '../../views';
-import { ApiRuntime } from '../../interfaces';
 import * as metrics from '../metrics';
 
 export interface ISignUpLeadContext extends ApiRuntime {
@@ -55,7 +55,7 @@ export async function signUpLead(
 	const sourceCallid = call.metadata.get('callid');
 	const callid = sourceCallid ? sourceCallid.toString() : generateTimeId();
 	const tracing: any = {
-		callid
+		callid,
 	};
 
 	const {
@@ -66,8 +66,8 @@ export async function signUpLead(
 	this.logger.debug({
 		...tracing,
 		grpc: {
-			request: call.request
-		}
+			request: call.request,
+		},
 	}, 'Request received');
 
 	let signUpLead: ISignUpLead = removeEmptyKeys(call.request.signUpLead);
@@ -110,7 +110,7 @@ export async function signUpLead(
 
 	const signUpLeadRequest = parseObjectToProtobuf(
 		call.request,
-		this.signUpLeadRequestType
+		this.signUpLeadRequestType,
 	);
 
 	let job = producer.job(generateTimeId());
@@ -120,10 +120,10 @@ export async function signUpLead(
 			id: job.id,
 			stream: 'SignUpLead',
 			groups: [
-				'IdentityService'
+				'IdentityService',
 			],
-			role: 'producer'
-		}
+			role: 'producer',
+		},
 	];
 
 	this.logger.info({
@@ -131,8 +131,8 @@ export async function signUpLead(
 		command: {
 			data: call.request,
 			service: 'SignUpService',
-			method: 'signUpLead'
-		}
+			method: 'signUpLead',
+		},
 	});
 
 	await job
@@ -158,7 +158,7 @@ export async function signUpLead(
 
 	signUpLead = parseProtobufToObject<ISignUpLead>(
 		result.signUpLead,
-		this.signUpLeadType
+		this.signUpLeadType,
 	);
 
 	removeEmptyKeys(signUpLead);
@@ -200,11 +200,11 @@ export default (runtime: ApiRuntime) => {
 			validateSignUpLeadCellphone,
 			signUpLeadRequestType,
 			signUpLeadType,
-			callsCounter
+			callsCounter,
 		},
 		{
-			logErrors: 'async'
-		}
+			logErrors: 'async',
+		},
 	);
 
 };

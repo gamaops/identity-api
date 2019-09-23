@@ -1,0 +1,27 @@
+language: node_js
+node_js:
+- '12'
+if: "(branch != master AND type = pull_request) OR (branch = master AND commit_message !~ /^Release v/) OR tag =~ ^v"
+stages:
+- test
+- Build and Tag
+script:
+- npm run lint
+#- npm run test:unit
+env:
+- GH_REPOSITORY=gamaops/identity-api
+jobs:
+  include:
+  - stage: Build and Tag
+    node_js: '12'
+    name: Build and Tag
+    script:
+    - ".travis/semver.sh"
+    if: tag !~ ^v AND branch = master AND type = push
+notifications:
+  slack:
+    rooms:
+    - secure: "J4SEpNe98+1LgrBraJI59tSnu+pBJ0OJBctXFSJKCe4aOHlbCxZjHnvR0bOjRcsHfDDSNrZYYR+7bKGqGwQBOXbYgDbdgR2C02cN8dWc2ULjxtETzqEtAg58BqymtSFkuTlBHtjWaVd131iMuo1UGHUeUOi2l4U2Xz3LhsASmvI/Gngr5GMC8D1ih1T6P1GqluhOpiVOurqinc5/l36x189zU3gConuX8V8cD6mK8eprm+nwvo4E2cNht7sU1kcksLCt9cG25AtnpjxtfXpBrUs5M23FX5YtaipJWHx2g/6/dI2LfFQXeACoOxvdld6PE8Fu/dJVDaXw/v1yWJZrEP7isDmhBvwyKCS/d89JOZeBX0jVQ2+RiiaW5w71Fi3k8aDC4WTvOsxfUrkH/WjZFgyyet8ArUkVr68nAr+O8TBDS8n1oQQI6PZKOSvdrzsOIIOUzDa7nKz08buh9etdFQGiKnKBDmkpmsXm58TxYBSGgPJHWuqntZvRK02Ja9+sKXTuQy+ImrG/tPve4/mxOwbj+IfEZTlcUCB96wRjow5TUAcYqtYK5FH0qBqOCpa8IxI9qQX4LdcG78nVRbI8qgy4vAr8j2t4xYjcrY1jQ6GKajbsCYJBfK+d4GgFmCCiNuT1jbxV2uITTsj7A43SvUFOQT3XBWhc8pZVh1nXPXQ="
+    on_success: always
+    on_failure: always
+    on_pull_requests: true

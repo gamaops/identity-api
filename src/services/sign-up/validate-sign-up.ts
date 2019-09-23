@@ -1,32 +1,32 @@
 import {
-	removeEmptyKeys,
 	generateTimeId,
 	parseObjectToProtobuf,
-	parseProtobufToObject
+	parseProtobufToObject,
+	removeEmptyKeys,
 } from '@gamaops/backend-framework';
-import {
-	IValidateSignUpRequest,
-	IValidateSignUpResponse,
-} from '@gamaops/definitions/identity/types/v1';
 import {
 	IOperationsDates,
 } from '@gamaops/definitions/commons/types/v1';
 import {
-	DISTRIBUTED_ROUTING
-} from 'hfxbus';
+	IValidateSignUpRequest,
+	IValidateSignUpResponse,
+} from '@gamaops/definitions/identity/types/v1';
 import { ValidateFunction } from 'ajv';
 import Logger from 'bunyan';
 import {
 	ServerUnaryCall,
 } from 'grpc';
 import {
+	DISTRIBUTED_ROUTING,
+} from 'hfxbus';
+import {
 	Counter,
 } from 'prom-client';
 import { Type } from 'protobufjs';
+import { ApiRuntime } from '../../interfaces';
 import {
 	validateExistsSignUp,
 } from '../../validators';
-import { ApiRuntime } from '../../interfaces';
 import { indexSignUp } from '../../views';
 import * as metrics from '../metrics';
 
@@ -49,23 +49,23 @@ export async function validateSignUp(
 	const sourceCallid = call.metadata.get('callid');
 	const callid = sourceCallid ? sourceCallid.toString() : generateTimeId();
 	const tracing: any = {
-		callid
+		callid,
 	};
 
 	const {
 		elasticsearch,
-		producer
+		producer,
 	} = this.params();
 
 	this.logger.debug({
 		...tracing,
 		grpc: {
-			request: call.request
-		}
+			request: call.request,
+		},
 	}, 'Request received');
 
-	let request: IValidateSignUpRequest = removeEmptyKeys(call.request);
-	let isValid = this.validateValidateSignUp(call.request);
+	const request: IValidateSignUpRequest = removeEmptyKeys(call.request);
+	const isValid = this.validateValidateSignUp(call.request);
 
 	if (!isValid) {
 		throw this.validateValidateSignUp.errors;
@@ -73,14 +73,14 @@ export async function validateSignUp(
 
 	await validateExistsSignUp(
 		elasticsearch,
-		request.signUpId
+		request.signUpId,
 	);
 
 	let job = producer.job(generateTimeId());
 
 	const validateSignUpRequest = parseObjectToProtobuf(
 		call.request,
-		this.validateSignUpRequestType
+		this.validateSignUpRequestType,
 	);
 
 	tracing.jobs = [
@@ -88,10 +88,10 @@ export async function validateSignUp(
 			id: job.id,
 			stream: 'ValidateSignUp',
 			groups: [
-				'IdentityService'
+				'IdentityService',
 			],
-			role: 'producer'
-		}
+			role: 'producer',
+		},
 	];
 
 	this.logger.info({
@@ -99,8 +99,8 @@ export async function validateSignUp(
 		command: {
 			data: call.request,
 			service: 'SignUpService',
-			method: 'validateSignUp'
-		}
+			method: 'validateSignUp',
+		},
 	});
 
 	await job
@@ -128,26 +128,26 @@ export async function validateSignUp(
 
 	const validateSignUpResponse = parseProtobufToObject<IValidateSignUpResponse>(
 		result.validateSignUpResponse,
-		this.validateSignUpResponseType
+		this.validateSignUpResponseType,
 	);
 
 	if (validateSignUpResponse.success) {
 
 		const operationsDates = parseProtobufToObject<IOperationsDates>(
 			result.signUpOperationDate,
-			this.operationsDatesType
+			this.operationsDatesType,
 		);
 
 		removeEmptyKeys(operationsDates);
 
 		indexSignUp(elasticsearch, {
 			signUpId: request.signUpId,
-			...operationsDates
+			...operationsDates,
 		});
-		
+
 		this.logger.debug({
 			...tracing,
-			signUpId: request.signUpId
+			signUpId: request.signUpId,
 		}, 'Lead indexed');
 	}
 
@@ -177,11 +177,11 @@ export default (runtime: ApiRuntime) => {
 			validateSignUpRequestType,
 			validateSignUpResponseType,
 			operationsDatesType,
-			callsCounter
+			callsCounter,
 		},
 		{
-			logErrors: 'async'
-		}
+			logErrors: 'async',
+		},
 	);
 
 };
