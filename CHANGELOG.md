@@ -1,3 +1,12 @@
+## 2019-09-23T17:36:33.603Z
+### 💚 - fixing the CI build (deployment)
+
+#### none
+
+- Fix package.json ssh dependecies
+
+-----------------------------
+
 ## 2019-09-23T16:50:40.068Z
 ### 👷 - adding CI build (project)
 
