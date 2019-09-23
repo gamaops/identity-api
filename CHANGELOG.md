@@ -1,3 +1,12 @@
+## 2019-09-23T18:09:31.705Z
+### 🐋 - work about Docker (integration)
+
+#### none
+
+- Add Dockerfile
+
+-----------------------------
+
 ## 2019-09-23T17:52:24.642Z
 ### 🐛 - fixing a bug (project)
 
