@@ -1,3 +1,12 @@
+## 2019-09-23T17:52:24.642Z
+### 🐛 - fixing a bug (project)
+
+#### none
+
+- Fix package-lock.json
+
+-----------------------------
+
 ## 2019-09-23T17:36:33.603Z
 ### 💚 - fixing the CI build (deployment)
 
