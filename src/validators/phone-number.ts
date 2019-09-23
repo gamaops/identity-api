@@ -7,7 +7,7 @@ export const validateMobilePhone = (dataPath: string, phoneNumber: string): void
 	if (!parsedPhoneNumber || !parsedPhoneNumber.isValid()) {
 		throw new DataValidationError(
 			`${dataPath} is not a valid mobile phone number`,
-			ErrorCodes.INVALID_PHONENUMBER
+			ErrorCodes.INVALID_PHONENUMBER,
 		);
 	}
 

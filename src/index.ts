@@ -1,23 +1,23 @@
 require('dotenv-defaults').config();
 
 import {
+	configureDefaultMetrics,
 	createBackendRuntime,
 	createElasticsearchClient,
+	createMetricsServer,
+	enableBackendRuntimeMetrics,
 	getGrpcProtoDescriptor,
 	getJsonSchemaValidator,
 	loadProtosDefinitions,
-	createMetricsServer,
-	configureDefaultMetrics,
-	enableBackendRuntimeMetrics,
 	logger,
 } from '@gamaops/backend-framework';
 import * as identity from '@gamaops/definitions/identity/types/v1';
 import grpc from 'grpc';
 import { ConnectionManager, Producer } from 'hfxbus';
 import { URL } from 'url';
-import { IServicesDescriptors, IServicesParameters, IServicesFunctions } from './interfaces';
-import addSignUp from './services/sign-up';
 import util from 'util';
+import { IServicesDescriptors, IServicesFunctions, IServicesParameters } from './interfaces';
+import addSignUp from './services/sign-up';
 
 configureDefaultMetrics({
 	serviceName: process.env.APP_NAME,

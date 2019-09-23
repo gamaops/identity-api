@@ -1,4 +1,7 @@
 import {
+	wrapGrpcUnaryMethod,
+} from '@gamaops/backend-framework';
+import {
 	ISignUpLeadRequest,
 	ISignUpResponse,
 	ISignUpServiceImplementation,
@@ -8,9 +11,6 @@ import {
 import {
 	ApiRuntime,
 } from '../../interfaces';
-import {
-	wrapGrpcUnaryMethod,
-} from '@gamaops/backend-framework';
 import addSignUpLead from './sign-up-lead';
 import addValidateSignUp from './validate-sign-up';
 
@@ -20,7 +20,7 @@ export default (runtime: ApiRuntime) => {
 		server,
 		schemaValidator,
 		descriptors,
-		logger
+		logger,
 	} = runtime.params();
 
 	addSignUpLead(runtime);
@@ -30,16 +30,16 @@ export default (runtime: ApiRuntime) => {
 		signUpLead: wrapGrpcUnaryMethod<ISignUpLeadRequest, ISignUpResponse>(
 			{
 				logger: logger.child({service: 'identity', function: 'signUpLead' }),
-				schemaValidator
+				schemaValidator,
 			},
-			runtime.fncs().signUpLead
+			runtime.fncs().signUpLead,
 		),
 		validateSignUp: wrapGrpcUnaryMethod<IValidateSignUpRequest, IValidateSignUpResponse>(
 			{
 				logger: logger.child({service: 'identity', function: 'validateSignUp' }),
-				schemaValidator
+				schemaValidator,
 			},
-			runtime.fncs().validateSignUp
+			runtime.fncs().validateSignUp,
 		),
 	};
 
