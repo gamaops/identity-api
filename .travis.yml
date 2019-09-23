@@ -1,7 +1,7 @@
 language: node_js
 node_js:
 - '12'
-if: "(branch != master AND type = pull_request) OR (branch = master AND commit_message !~ /^Release v/) OR tag =~ ^v"
+if: "(branch = master AND type = pull_request) OR (branch = master AND commit_message !~ /^Release v/) OR tag =~ ^v"
 stages:
 - test
 - Build and Tag
