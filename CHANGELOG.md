@@ -1,3 +1,12 @@
+## 2019-09-23T16:50:40.068Z
+### 👷 - adding CI build (project)
+
+#### none
+
+- Add travis integration
+
+-----------------------------
+
 ## 2019-09-20T18:02:27.980Z
 ### 🆕 - add code or file(s) (deployment)
 
