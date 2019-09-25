@@ -1,3 +1,12 @@
+## 2019-09-25T01:15:25.191Z
+### ⬆️ - upgrading dependencies (project)
+
+#### none
+
+- Upgrade HFXBus
+
+-----------------------------
+
 ## 2019-09-23T18:09:31.705Z
 ### 🐋 - work about Docker (integration)
 
