@@ -11,6 +11,7 @@
     "start": "tsc -w",
     "pm2:up": "pm2 start build/index.js --name identity-api",
     "pm2:down": "pm2 del identity-api",
+    "pm2:debug": "pm2 start build/index.js --name identity-api --node-args='--inspect-brk=0.0.0.0:9230'",
     "coverage": "nyc npm run test",
     "test": "mocha 'specs/unit/**/*.spec.ts' -b -r 'ts-node/register' -r 'module-alias/register'",
     "test:tdd": "npm run test:unit -- -w --extension ts"
@@ -58,7 +59,7 @@
     "date-fns": "^2.0.0-beta.5",
     "dotenv-defaults": "^1.0.2",
     "grpc": "^1.23.1",
-    "hfxbus": "^2.2.0-0",
+    "hfxbus": "^2.2.0",
     "libphonenumber-js": "^1.7.22",
     "prom-client": "^11.5.3",
     "protobufjs": "^6.8.8"
