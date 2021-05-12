@@ -58,7 +58,7 @@
     "bunyan": "^1.8.12",
     "date-fns": "^2.0.0-beta.5",
     "dotenv-defaults": "^1.0.2",
-    "grpc": "^1.23.1",
+    "grpc": "^1.24.9",
     "hfxbus": "^2.2.0",
     "libphonenumber-js": "^1.7.22",
     "prom-client": "^11.5.3",
