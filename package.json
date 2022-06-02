@@ -62,6 +62,6 @@
     "hfxbus": "^2.2.0",
     "libphonenumber-js": "^1.7.22",
     "prom-client": "^11.5.3",
-    "protobufjs": "^6.8.8"
+    "protobufjs": "^6.11.3"
   }
 }
